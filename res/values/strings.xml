@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ImageSearch</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="Search"></string>
+    <string name="ImageSearch">Search</string>
+    <string name="queryHint">Enter Search Term</string>
+    <string name="title_activity_image_display">ImageDisplayActivity</string>
+    <string name="title_activity_image_settings">Image Search Settings</string>
+    <string-array name="spinnerColorItems">
+        <item>yellow</item>
+        <item>blue</item>
+        <item>red</item>
+        <item>green</item>
+    </string-array>
+	<string-array name="spinnerImageType">
+        <item>faces</item>
+        <item>photo</item>
+        <item>clip art</item>
+        <item>line art</item>
+    </string-array>
+</resources>

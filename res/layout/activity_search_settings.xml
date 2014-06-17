@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="0.82" >
+
+    <RadioGroup
+        android:id="@+id/rgImageSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/etFilter"
+        android:layout_below="@+id/etFilter" >
+
+        <RadioButton
+            android:id="@+id/rdsmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="small" 
+            android:onClick="onRadioButtonClicked"/>
+
+        <RadioButton
+            android:id="@+id/rdmedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="medium" 
+            android:onClick="onRadioButtonClicked"/>
+
+        <RadioButton
+            android:id="@+id/rdlarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="large" 
+            android:onClick="onRadioButtonClicked"/>
+
+        <RadioButton
+            android:id="@+id/rdextralarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="extra-large"
+            android:onClick="onRadioButtonClicked" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/rgImageSize"
+        android:layout_alignParentBottom="true"
+        android:onClick="onSave"
+        android:text="Save" />
+
+    <Spinner
+        android:id="@+id/spColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/rgImageSize"
+        android:layout_centerVertical="true" 
+        android:entries="@array/spinnerColorItems"/>
+
+    <TextView
+        android:id="@+id/tvColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/tvSize"
+        android:layout_below="@+id/rgImageSize"
+        android:text="Color" />
+
+    <TextView
+        android:id="@+id/tvType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnSave"
+        android:layout_alignLeft="@+id/tvSize"
+        android:layout_marginBottom="60dp"
+        android:text="Type" />
+
+    <Spinner
+        android:id="@+id/spType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnSave"
+        android:layout_alignTop="@+id/tvType"
+        android:entries="@array/spinnerImageType"  />
+
+    <EditText
+        android:id="@+id/etFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tvFilter"
+        android:layout_alignParentRight="true"
+        android:ems="10"
+        android:hint="Filter by Site" />
+
+    <TextView
+        android:id="@+id/tvFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="26dp"
+        android:text="Site Filter" />
+
+    <TextView
+        android:id="@+id/tvSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/tvFilter"
+        android:layout_alignTop="@+id/rgImageSize"
+        android:layout_marginTop="16dp"
+        android:text="Size" />
+    
+</RelativeLayout>
