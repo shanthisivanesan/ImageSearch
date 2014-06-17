@@ -1,3 +1,4 @@
+﻿#2 Google Image Search
 Overview:
 --------- 
 Grid Image Search is an android app for  searching images powered by the Google Image Search API.
@@ -17,3 +18,8 @@ User Stories Implemented:
 4.Subsequent searches will have any filters applied to the search results
 5.User can tap on any image in results to see the image full-screen
 6.User can scroll down “infinitely” to continue loading more image results (up to 8 pages)
+Notes:
+
+Walkthrough of all user stories:
+
+![Video Walkthrough](ImageSearch.gif)

@@ -56,7 +56,25 @@ public class ImageSearchActivity extends Activity {
 				startActivity(i);
 			}
 		});
+		
+		// Attach the listener to the AdapterView onCreate
+		gvResults.setOnScrollListener(new EndlessScrollListener() {
+	    @Override
+	    public void onLoadMore(int page, int totalItemsCount) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to your AdapterView
+	        customLoadMoreDataFromApi(page); 
+                // or customLoadMoreDataFromApi(totalItemsCount); 
+	    }
+        });
 	}
+	
+	// Append more data into the adapter
+    public void customLoadMoreDataFromApi(int offset) {
+      // This method probably sends out a network request and appends new data items to your adapter. 
+      // Use the offset value and add it as a parameter to your API request to retrieve paginated data.
+      // Deserialize API response and then construct new objects to append to the adapter
+    }
 	//Menu
 	public boolean onCreateOptionsMenu(Menu menu){
 		MenuInflater inflater = getMenuInflater();
