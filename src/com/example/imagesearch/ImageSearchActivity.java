@@ -38,7 +38,7 @@ public class ImageSearchActivity extends Activity {
 	ArrayList<ImageResults> imageResults = new ArrayList<ImageResults>();
 	ImageResultArrayAdapter imageAdapter;
 
-	int currentPage=0;
+	int currentPage=1;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class ImageSearchActivity extends Activity {
 			}
 		});
 	}
-	
+	//Menu
 	public boolean onCreateOptionsMenu(Menu menu){
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu,menu);
@@ -67,7 +67,7 @@ public class ImageSearchActivity extends Activity {
 	public void moreData(View v)
 	{
 		currentPage+=1;
-		Toast.makeText(this, "Search for: "+currentPage,Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "Page: "+currentPage,Toast.LENGTH_SHORT).show();
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
 		Editor edit = pref.edit();
 		edit.putInt("page", currentPage);
