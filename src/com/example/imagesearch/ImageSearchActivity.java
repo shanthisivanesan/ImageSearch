@@ -90,8 +90,8 @@ public class ImageSearchActivity extends Activity {
 		//
 		 String url ="https://ajax.googleapis.com/ajax/services/search/images";
 		 RequestParams params= setParameters(offset);
-		 Toast.makeText(this, "url:"+url+",params:"+params, Toast.LENGTH_LONG).show();
-		 Log.d("DEBUG","url:"+url+",params:"+params);
+		// Toast.makeText(this, "url:"+url+",params:"+params, Toast.LENGTH_LONG).show();
+		 //Log.d("DEBUG","url:"+url+",params:"+params);
 		//API request
 		 client.get(url, params,new JsonHttpResponseHandler(){
 		public void onSuccess(JSONObject response){
@@ -101,9 +101,9 @@ public class ImageSearchActivity extends Activity {
 			{
 				
 				imageJsonResults = response.getJSONObject("responseData").getJSONArray("results");
-				imageResults.clear();
+				//imageResults.clear();
 				imageAdapter.addAll(ImageResults.fromJSONArray(imageJsonResults));
-				Log.d("DEBUG",imageResults.toString());
+				//Log.d("DEBUG",imageResults.toString());
 			}
 			catch(JSONException e){
 				e.printStackTrace();
@@ -217,7 +217,7 @@ public class ImageSearchActivity extends Activity {
 		public void onImageSearch(View v)
 		{
 			 client = new AsyncHttpClient();
-			 Toast.makeText(this, "size:"+page, Toast.LENGTH_LONG).show();
+			 //Toast.makeText(this, "size:"+page, Toast.LENGTH_LONG).show();
 			 String url ="https://ajax.googleapis.com/ajax/services/search/images";
 			 RequestParams params= setParameters(page);
 			//API request
@@ -231,7 +231,7 @@ public class ImageSearchActivity extends Activity {
 					imageJsonResults = response.getJSONObject("responseData").getJSONArray("results");
 					imageResults.clear();
 					imageAdapter.addAll(ImageResults.fromJSONArray(imageJsonResults));
-					Log.d("DEBUG",imageResults.toString());
+					//Log.d("DEBUG",imageResults.toString());
 				}
 				catch(JSONException e){
 					e.printStackTrace();
@@ -244,7 +244,7 @@ public class ImageSearchActivity extends Activity {
 		public void moreData(View v)
 		{
 			page+=1;
-			Toast.makeText(this, "Page: "+page,Toast.LENGTH_SHORT).show();
+			//Toast.makeText(this, "Page: "+page,Toast.LENGTH_SHORT).show();
 			SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
 			Editor edit = pref.edit();
 			edit.putInt("page", page);

@@ -34,13 +34,4 @@
         android:onClick="onImageSearch"
         android:text="@string/ImageSearch" />
 
-    <Button
-        android:id="@+id/btnMore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:onClick="moreData"
-        android:text="More Data" />
-
 </RelativeLayout>
