@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 public class ImageSearchActivity extends Activity {
 	EditText etQuery;
@@ -37,8 +38,9 @@ public class ImageSearchActivity extends Activity {
 	Button btnSearch;
 	ArrayList<ImageResults> imageResults = new ArrayList<ImageResults>();
 	ImageResultArrayAdapter imageAdapter;
-
-	int currentPage=1;
+	AsyncHttpClient client;
+	int page=1;
+	SharedPreferences settings;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,69 +61,39 @@ public class ImageSearchActivity extends Activity {
 		
 		// Attach the listener to the AdapterView onCreate
 		gvResults.setOnScrollListener(new EndlessScrollListener() {
-	    @Override
-	    public void onLoadMore(int page, int totalItemsCount) {
-                // Triggered only when new data needs to be appended to the list
-                // Add whatever code is needed to append new items to your AdapterView
-	        customLoadMoreDataFromApi(page); 
-                // or customLoadMoreDataFromApi(totalItemsCount); 
-	    }
+			
+			@Override
+		    public void onLoadMore(int page, int totalItemsCount) {
+	                // Triggered only when new data needs to be appended to the list
+	                // Add whatever code is needed to append new items to your AdapterView
+				
+		        customLoadMoreDataFromApi(page); 
+	                // or customLoadMoreDataFromApi(totalItemsCount); 
+		    }
         });
 	}
 	
-	// Append more data into the adapter
-    public void customLoadMoreDataFromApi(int offset) {
-      // This method probably sends out a network request and appends new data items to your adapter. 
-      // Use the offset value and add it as a parameter to your API request to retrieve paginated data.
-      // Deserialize API response and then construct new objects to append to the adapter
-    }
-	//Menu
-	public boolean onCreateOptionsMenu(Menu menu){
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu,menu);
-		return true;
-	}
-	//Get More Data
-	public void moreData(View v)
-	{
-		currentPage+=1;
-		Toast.makeText(this, "Page: "+currentPage,Toast.LENGTH_SHORT).show();
-		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-		Editor edit = pref.edit();
-		edit.putInt("page", currentPage);
-		edit.commit();
-		onImageSearch(v);
-	}
-	
-	 public void onSettings(MenuItem mi) {
-		// Toast.makeText(this, "Search for: "+mi.toString(),Toast.LENGTH_SHORT).show();
-		 Intent intent = new Intent(ImageSearchActivity.this,ImageSettings.class);
-		 if(intent!=null)
-		 {
-			startActivity(intent);
-		 }
-	  }
-	 
+	//Get the controls
 	public void setupViews()
 	{
 		etQuery = (EditText)findViewById(R.id.etQuery);
 		btnSearch = (Button)findViewById(R.id.btnSearch);
 		gvResults = (GridView)findViewById(R.id.gvResults);
 	}
-	//Search Button Click- call Google Image search API
-	public void onImageSearch(View v)
-	{
-		String query = etQuery.getText().toString();
-		AsyncHttpClient client = new AsyncHttpClient();
-		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-		String size = settings.getString("size", "small");
-		String site = settings.getString("site", "espn.com");
-		String type = settings.getString("type", "photo");
-		String color = settings.getString("color", "red");
-		//Toast.makeText(this, "size:"+size+"site:"+site+"type:"+type+"color:"+color, Toast.LENGTH_LONG).show();
+	// Append more data into the adapter
+    public void customLoadMoreDataFromApi(int offset) {
+      // This method probably sends out a network request and appends new data items to your adapter. 
+      // Use the offset value and add it as a parameter to your API request to retrieve paginated data.
+      // Deserialize API response and then construct new objects to append to the adapter
+    	
+    	client = new AsyncHttpClient();
+		//
+		 String url ="https://ajax.googleapis.com/ajax/services/search/images";
+		 RequestParams params= setParameters(offset);
+		 Toast.makeText(this, "url:"+url+",params:"+params, Toast.LENGTH_LONG).show();
+		 Log.d("DEBUG","url:"+url+",params:"+params);
 		//API request
-		client.get("https://ajax.googleapis.com/ajax/services/search/images?rsz=8&" +
-				"start="+ currentPage+"&v=1.0&q="+Uri.encode(query)+"&imgtype="+type+"&as_sitesearch="+site+"&imgsz="+size+"&imgcolor"+color,new JsonHttpResponseHandler(){
+		 client.get(url, params,new JsonHttpResponseHandler(){
 		public void onSuccess(JSONObject response){
 			
 			JSONArray imageJsonResults = null;
@@ -138,8 +110,43 @@ public class ImageSearchActivity extends Activity {
 			}
 		}
 		});
+    }
+	//Menu
+	public boolean onCreateOptionsMenu(Menu menu){
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu,menu);
+		return true;
 	}
 	
+	 public void onSettings(MenuItem mi) {
+		// Toast.makeText(this, "Search for: "+mi.toString(),Toast.LENGTH_SHORT).show();
+		 Intent intent = new Intent(ImageSearchActivity.this,ImageSettings.class);
+		 if(intent!=null)
+		 {
+			startActivity(intent);
+		 }
+	  }
+	 
+	
+	
+	public RequestParams setParameters(int offset)
+	{
+		RequestParams params= new RequestParams();
+		params.put("rsz","8");
+		params.put("start",offset);
+		params.put("v","1.0");
+		params.put("q",etQuery.getText().toString());
+		settings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+		if(settings!=null)
+		{
+			params.put("imgsz",settings.getString("size", "small"));
+			params.put("as_sitesearch",settings.getString("site", "espn.com"));
+			params.put("imgtype",settings.getString("type", "photo"));
+			params.put("imgcolor",settings.getString("color", "red"));
+    	}		
+		return params;
+	}
+
 	public abstract class EndlessScrollListener implements OnScrollListener {
 		
 		// The minimum amount of items to have below your current scroll position
@@ -202,4 +209,47 @@ public class ImageSearchActivity extends Activity {
 			// Don't take any action on changed
 		}
 	}
+
+		
+		
+		
+		//Search Button Click- call Google Image search API
+		public void onImageSearch(View v)
+		{
+			 client = new AsyncHttpClient();
+			 Toast.makeText(this, "size:"+page, Toast.LENGTH_LONG).show();
+			 String url ="https://ajax.googleapis.com/ajax/services/search/images";
+			 RequestParams params= setParameters(page);
+			//API request
+			 client.get(url, params,new JsonHttpResponseHandler(){
+			public void onSuccess(JSONObject response){
+				
+				JSONArray imageJsonResults = null;
+				try
+				{
+					
+					imageJsonResults = response.getJSONObject("responseData").getJSONArray("results");
+					imageResults.clear();
+					imageAdapter.addAll(ImageResults.fromJSONArray(imageJsonResults));
+					Log.d("DEBUG",imageResults.toString());
+				}
+				catch(JSONException e){
+					e.printStackTrace();
+				}
+			}
+			});
+		}
+
+		//Get More Data
+		public void moreData(View v)
+		{
+			page+=1;
+			Toast.makeText(this, "Page: "+page,Toast.LENGTH_SHORT).show();
+			SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+			Editor edit = pref.edit();
+			edit.putInt("page", page);
+			edit.commit();
+			customLoadMoreDataFromApi(page);
+		}
 }
+	
