@@ -36,7 +36,7 @@ User Stories Implemented:
 Options:
 ---------
 Settings Layout background color 
-Notes:
+
 
 Walkthrough of all user stories:
 
