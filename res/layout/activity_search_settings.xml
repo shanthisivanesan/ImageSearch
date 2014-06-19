@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_weight="0.82" >
+    android:layout_weight="0.82" 
+    android:background="#99FFCC">
 
     <RadioGroup
         android:id="@+id/rgImageSize"

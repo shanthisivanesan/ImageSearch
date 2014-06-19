@@ -77,7 +77,6 @@ public class ImageSettings extends Activity {
 	    	RadioButton el=(RadioButton)findViewById(R.id.rdextralarge);
 			el.setChecked(true);
 	    }
-		//rg.check(((RadioButton)rg.getChildAt(INDEX)).getId());
 	}
 	
 	//private method to get spinner index
@@ -133,8 +132,6 @@ public class ImageSettings extends Activity {
 		edit.putString("color", color.toString());
 		edit.putString("type", type.toString());
 		edit.commit();
-		// Activity finished ok, return the data
-		// setResult(RESULT_OK, data); // set result code and bundle data for response
-		  finish(); // closes the activity, pass data to parent
+        finish(); // closes the activity, pass data to parent
 	}
 }

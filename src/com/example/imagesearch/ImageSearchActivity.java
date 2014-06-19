@@ -67,8 +67,8 @@ public class ImageSearchActivity extends Activity {
 	                // Triggered only when new data needs to be appended to the list
 	                // Add whatever code is needed to append new items to your AdapterView
 				
-		        customLoadMoreDataFromApi(page); 
-	                // or customLoadMoreDataFromApi(totalItemsCount); 
+		        //customLoadMoreDataFromApi(page); 
+	            customLoadMoreDataFromApi(totalItemsCount); 
 		    }
         });
 	}
@@ -133,7 +133,7 @@ public class ImageSearchActivity extends Activity {
 	{
 		RequestParams params= new RequestParams();
 		params.put("rsz","8");
-		params.put("start",offset);
+		params.put("start",String.valueOf(offset));
 		params.put("v","1.0");
 		params.put("q",etQuery.getText().toString());
 		settings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
@@ -217,9 +217,12 @@ public class ImageSearchActivity extends Activity {
 		public void onImageSearch(View v)
 		{
 			 client = new AsyncHttpClient();
-			 //Toast.makeText(this, "size:"+page, Toast.LENGTH_LONG).show();
+			 
 			 String url ="https://ajax.googleapis.com/ajax/services/search/images";
 			 RequestParams params= setParameters(page);
+			 //Toast.makeText(this, "url:"+url+",params:"+params, Toast.LENGTH_LONG).show();
+			 //Log.d("shanthi","url:"+url+",params:"+params);
+			 
 			//API request
 			 client.get(url, params,new JsonHttpResponseHandler(){
 			public void onSuccess(JSONObject response){
