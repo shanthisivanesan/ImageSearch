@@ -27,7 +27,7 @@ public class ImageSettings extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_settings);
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-		String _size = settings.getString("size", "small");
+		String _size = settings.getString("size", "large");
 		String _site = settings.getString("site", "espn.com");
 		String _type = settings.getString("type", "photo");
 		String _color = settings.getString("color", "red");
@@ -125,6 +125,8 @@ public class ImageSettings extends Activity {
 		//Toast.makeText(this, 
 		//		"size:"+size+",type:"+type.toString()+",color:"+color.toString()+",site:"+etSite.getText().toString(), 
 		//		Toast.LENGTH_LONG).show();
+		String color = (String) spColor.getSelectedItem();
+		String type = (String) spType.getSelectedItem();
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
 		Editor edit = pref.edit();
 		edit.putString("size", size);
